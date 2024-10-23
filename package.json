@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "vercel-build": "pnpm run dev"
   },
   "dependencies": {
     "@chakra-ui/next-js": "^2.1.4",
