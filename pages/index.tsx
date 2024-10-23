@@ -137,7 +137,7 @@ export default function Home() {
 
 // Ajoute ce useEffect juste après
 useEffect(() => {
-  const fetchMetadata = async (uri) => {
+  const fetchMetadata = async (uri: string) => {
     const response = await fetch(uri);
     return await response.json();
   };
@@ -316,7 +316,7 @@ useEffect(() => {
       display: 'inline-block',
       backgroundColor: 'transparent', // Fond clair pour faire ressortir l'ombre
       position: 'relative',
-      transform: 'skew(-5deg)',
+      //transform: 'skew(-5deg)',
       transform: 'rotate(-1deg)',
       boxShadow: `
       0 0 5px pink,
@@ -350,7 +350,6 @@ useEffect(() => {
       marginTop: '10px'
       }}>
       <img style={{
-        borderRadius: '8px',
         height: '230px',
         objectFit: 'cover',
         border: '1px solid black',
@@ -458,7 +457,7 @@ useEffect(() => {
         {ownedTokens?.length ? (
           ownedTokens.map((token, index) => (
             <div key={index} style={{ border: '1px solid #ccc', borderRadius: '8px', padding: '16px', backgroundColor: '#fff', textAlign: 'center' }}>
-              <img src={token.metadata.image} alt={token.metadata.name} style={{ width: '200%', height: 'auto', objectFit: 'contain' }} />
+              {/*<img src={token.metadata.image} alt={token.metadata.name} style={{ width: '200%', height: 'auto', objectFit: 'contain' }} />*/}
               <p style={{ fontWeight: 'bold' }}>{token.metadata.name}</p>
             </div>
           ))
