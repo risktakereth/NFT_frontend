@@ -17,8 +17,6 @@ import { ShowNft } from "../components/showNft";
 import { InitializeModal } from "../components/initializeModal";
 import { image, headerText } from "../settings";
 import { useSolanaTime } from "@/utils/SolanaTimeContext";
-//<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English&display=swap" rel="stylesheet">
-
 
 const WalletMultiButtonDynamic = dynamic(
   async () =>
@@ -231,248 +229,134 @@ useEffect(() => {
         <style jsx global>
           {`
       body {
-          margin: 0;
-            padding: 0;
-            height: 100vh; /* Pour permettre le scroll */
-            background-image: linear-gradient(rgba(99, 64, 0, 0.2), rgba(255, 255, 0, 0.2)), url('https://olive-broad-giraffe-200.mypinata.cloud/ipfs/QmQTQaNzfAYfRcG5X1wpRLa7mi1GDF138zdp8jPXe8BWnK');
-            background-attachment: fixed;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+          background: #2d3748; 
        }
    `}
         </style>
+        <Card>
+          <CardHeader>
+            <Flex minWidth='max-content' alignItems='center' gap='2'>
+              <Box>
+                <Heading size='md'>{headerText}</Heading>
+              </Box>
+              {loading ? (<></>) : (
+                <Flex justifyContent="flex-end" marginLeft="auto">
+                  <Box background={"teal.100"} borderRadius={"5px"} minWidth={"50px"} minHeight={"50px"} p={2} >
+                    <VStack >
+                      <Text fontSize={"sm"}>Available NFTs:</Text>
+                      <Text fontWeight={"semibold"}>{Number(candyMachine?.data.itemsAvailable) - Number(candyMachine?.itemsRedeemed)}/{Number(candyMachine?.data.itemsAvailable)}</Text>
+                    </VStack>
+                  </Box>
+                </Flex>
+              )}
+            </Flex>
+          </CardHeader>
+
+          <CardBody>
+            <Center>
+              <Box
+                rounded={'lg'}
+                mt={-12}
+                pos={'relative'}>
+                <Image
+                  rounded={'lg'}
+                  height={230}
+                  objectFit={'cover'}
+                  alt={"project Image"}
+                  src={image}
+                />
+              </Box>
+            </Center>
+            <Stack divider={<StackDivider />} spacing='8'>
+              {loading ? (
+                <div>
+                  <Divider my="10px" />
+                  <Skeleton height="30px" my="10px" />
+                  <Skeleton height="30px" my="10px" />
+                  <Skeleton height="30px" my="10px" />
+                </div>
+              ) : (
+                <ButtonList
+                  guardList={guards}
+                  candyMachine={candyMachine}
+                  candyGuard={candyGuard}
+                  umi={umi}
+                  ownedTokens={ownedTokens}
+                  setGuardList={setGuards}
+                  mintsCreated={mintsCreated}
+                  setMintsCreated={setMintsCreated}
+                  onOpen={onShowNftOpen}
+                  setCheckEligibility={setCheckEligibility}
+                />
+              )}
+            </Stack>
+          </CardBody>
+        </Card >
+        {umi.identity.publicKey === candyMachine?.authority ? (
+          <>
+            <Center>
+              <Button backgroundColor={"red.200"} marginTop={"10"} onClick={onInitializerOpen}>Initialize Everything!</Button>
+            </Center>
+            <Modal isOpen={isInitializerOpen} onClose={onInitializerClose}>
+              <ModalOverlay />
+              <ModalContent maxW="600px">
+                <ModalHeader>Initializer</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                  < InitializeModal umi={umi} candyMachine={candyMachine} candyGuard={candyGuard} />
+                </ModalBody>
+              </ModalContent>
+            </Modal>
+
+          </>)
+          :
+          (<></>)
+        }
+
+        <Modal isOpen={isShowNftOpen} onClose={onShowNftClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Your minted NFT:</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <ShowNft nfts={mintsCreated} />
+            </ModalBody>
+          </ModalContent>
+        </Modal>
 
 
 
-<div style={{
-    position: 'absolute',
-    top: -400,
-    left: '7%',
-    width: '20%', // Pour couvrir toute la largeur
-    height: '100%', // Pour couvrir toute la hauteur
-    zIndex: -1, // Positionne l'image derrière les autres éléments
-    backgroundImage: "url('https://olive-broad-giraffe-200.mypinata.cloud/ipfs/QmQygXtXVzFCp7LcQbukPRYeCcBrmZ3mQGqSqwbAK486Wf')",
-    backgroundSize: 'cover', // Pour couvrir toute la div
-    //backgroundPosition: 'center' // Centre l'image
-  }}></div>
-
-
-
-
-<div style={{
-    position: 'absolute',
-    top: -400,
-    left: '75%',
-    width: '20%', // Pour couvrir toute la largeur
-    height: '100%', // Pour couvrir toute la hauteur
-    zIndex: -1, // Positionne l'image derrière les autres éléments
-    backgroundImage: "url('https://olive-broad-giraffe-200.mypinata.cloud/ipfs/QmQygXtXVzFCp7LcQbukPRYeCcBrmZ3mQGqSqwbAK486Wf')",
-    backgroundSize: 'cover', // Pour couvrir toute la div
-    //backgroundPosition: 'center' // Centre l'image
-  }}></div>
-
-
-        
-        
-
-<div style={{ marginTop: '5em' }}>
-
-
-
-
- {/* Zone du Mint */}
- <div style={{
-  margin: '2em 0',
-  padding: '1em',
-  color: 'white',
-  fontSize: '140%',
-  border: '1px solid black',
-  boxShadow: `
-          0px 0px 3px black
-        `,
-  borderRadius: '8px',
-  backgroundColor: 'transparent', // Fond transparent pour voir l'image
-  textAlign: 'center',
-  backgroundImage: `url('https://olive-broad-giraffe-200.mypinata.cloud/ipfs/QmPWNP1nsrxTH342juNwLqLGqvTxZFjWNG5zJ8ggobDAXU')`, // Image de fond
-  backgroundSize: 'cover', // Pour couvrir toute la div
-  backgroundPosition: 'center' // Pour centrer l'image
-}}>
-  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-    <h2 style={{
-      marginBottom: '0.5em',
-      color: 'white',
-      textShadow: `
-        0 0 5px pink,
-        0 0 10px pink,
-        0 0 20px magenta,
-        0 0 30px magenta
-      `,
-      fontWeight: 'bold',
-      textTransform: 'uppercase', // Mettre le texte en majuscules
-      border: '5px solid white', // Bordure blanche
-      padding: '10px',
-      borderRadius: '8px',
-      display: 'inline-block',
-      backgroundColor: 'transparent', // Fond clair pour faire ressortir l'ombre
-      position: 'relative',
-      transform: 'skew(-5deg)',
-      transform: 'rotate(-1deg)',
-      boxShadow: `
-      0 0 5px pink,
-      0 0 8px pink,
-      0 0 10px magenta,
-      0 0 12px magenta
-      `
-    }}>
-      Welcome to the Gobelin Rave!
-      <span style={{
-    position: 'absolute',
-    top: '0',
-    left: '0',
-    right: '0',
-    bottom: '0',
-    backgroundColor: 'transparent',
-    boxShadow: `
-      inset 0 0 5px pink,
-      inset 0 0 8px pink,
-      inset 0 0 10px magenta,
-      inset 0 0 12px magenta
-    `,
-    zIndex: +1 // Met l'ombre derrière le texte
-  }} />
-    </h2>
-    
-    <div style={{
-      position: 'relative',
-      display: 'flex',
-      justifyContent: 'center',
-      marginTop: '10px'
-      }}>
-      <img style={{
-        borderRadius: '8px',
-        height: '230px',
-        objectFit: 'cover',
-        border: '1px solid black',
-        borderRadius: '9.5px',
-        margin: '0% 20% 0% 0%',
-        cursor: 'pointer',
-        boxShadow: `
-          0 0 5px black,
-          0 0 10px brown,
-          0 0 20px brown
-        `,
-        }} alt="project Image" src={image} />
-    
-    {/* Zone pour le nombre de NFTs restants */}
-  <div style={{
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginLeft: '20px'}}>
-    {!loading && (
-      <div style={{
-      /*backgroundColor: 'teal',*/
-      whiteSpace: 'nowrap',
-      fontSize: '80%',
-      borderRadius: '5px',
-      //padding: '8px',
-      minWidth: '50px',
-      minHeight: '50px',
-      }}>
-        <div>
-        <p style={{
-          textTransform: 'uppercase',
-          fontSize: '30px',                        // Taille de la police
-          fontWeight: 900,
-          color: '#3b1a00',                        // Couleur marron bois
-          textShadow: `1px 1px black`,
-          letterSpacing: '2px',                    // Espacement des lettres pour un effet plus prononcé
-          //padding: '10px',                         // Espacement autour du texte
-          boxShadow: `
-            inset 0 0 5px rgba(0, 0, 0, 0.4),      // Ombre interne pour effet creusé
-            5px 5px 10px rgba(0, 0, 0, 0.6)        // Ombre externe pour relief
-          `
-        }}>
-  Available<br />Gobelins:<br />
-  {Number(candyMachine?.data.itemsAvailable) - Number(candyMachine?.itemsRedeemed)}/{Number(candyMachine?.data.itemsAvailable)}
-          </p>
-        </div>
-      </div>
-    )}
-    </div>
-
-
-
-    </div>
-  </div>
-
-  <div style={{ marginTop: '20px', fontSize: '150%'}}>
+<Card id ="nft-display" style={{marginTop: 5 + 'em'}}>
+  <CardHeader>
+    <Heading size='md'>Mes NFTs</Heading>
+  </CardHeader>
+  <CardBody>
     {loading ? (
-      <div>
-        <div style={{ height: '30px', margin: '10px', backgroundColor: '#f0f0f0' }}></div>
-        <div style={{ height: '30px', margin: '10px', backgroundColor: '#f0f0f0' }}></div>
-        <div style={{ height: '30px', margin: '10px', backgroundColor: '#f0f0f0' }}></div>
-      </div>
+      <Text>Chargement des NFTs...</Text>
     ) : (
-      <ButtonList
-        guardList={guards}
-        candyMachine={candyMachine}
-        candyGuard={candyGuard}
-        umi={umi}
-        ownedTokens={ownedTokens}
-        setGuardList={setGuards}
-        mintsCreated={mintsCreated}
-        setMintsCreated={setMintsCreated}
-        onOpen={onShowNftOpen}
-        setCheckEligibility={setCheckEligibility}
-      />
-    )}
-  </div>
-
-  {umi.identity.publicKey === candyMachine?.authority && (
-    <div style={{ textAlign: 'center', marginTop: '10px' }}>
-      <button style={{ backgroundColor: 'red', padding: '10px' }} onClick={onInitializerOpen}>Initialize Everything!</button>
-    </div>
-  )}
-</div>
-
-
-
-  {/* Zone d'Affichage des NFTs */}
-  <div id="nft-display" style={{ marginTop: '5em', padding: '1em', border: '1px solid #ccc', borderRadius: '8px', backgroundColor: '#f9f9f9' }}>
-    <h2 style={{textAlign: 'center', marginBottom: '10px'}}>Mes NFTs</h2>
-    {loading ? (
-      <p>Chargement des NFTs...</p>
-    ) : (
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '16px',
-          justifyContent: 'center',
-          maxWidth: '1200px',
-          margin: '0 auto'
-        }}
-      >
+      <Stack spacing={4}>
+        {console.log(ownedTokens)}
         {ownedTokens?.length ? (
           ownedTokens.map((token, index) => (
-            <div key={index} style={{ border: '1px solid #ccc', borderRadius: '8px', padding: '16px', backgroundColor: '#fff', textAlign: 'center' }}>
-              <img src={token.metadata.image} alt={token.metadata.name} style={{ width: '200%', height: 'auto', objectFit: 'contain' }} />
-              <p style={{ fontWeight: 'bold' }}>{token.metadata.name}</p>
-            </div>
+            <Box key={index} borderWidth="1px" borderRadius="lg" p={4}>
+
+              <Image
+                src={token.metadata.image}
+                alt={token.metadata.name}
+                width={200}
+                height={200}
+              />
+              <Text fontWeight="bold">{token.metadata.name}</Text>
+              <Text>{token.metadata.description}</Text>
+            </Box>
           ))
         ) : (
-          <p>Tu n'as pas encore de NFTs.</p>
+          <Text>Tu n'as pas encore de NFTs.</Text>
         )}
-      </div>
+      </Stack>
     )}
-  </div>
-</div>
-
-
-
-
+  </CardBody>
+</Card>
 
 
 

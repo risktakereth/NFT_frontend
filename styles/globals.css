@@ -47,7 +47,8 @@ body {
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  color : white;
+  /*color: rgb(var(--foreground-rgb));*/
   background: rgb(var(--background-rgb));
 }
 
@@ -64,12 +65,57 @@ a {
 
 button.wallet-adapter-button-trigger {
   cursor: pointer;
+  padding: 20px 24px 18px 24px;
+  /*font-size: 100%;*/
+  font-weight: 900;
   color: rgb(var(--foreground-rgb)) !important;
   border: 1px solid rgb(var(--tertiary-background-rgb)) !important;
   border-radius: var(--border-radius) !important;
-  background-color: rgb(var(--secondary-background-rgb)) !important;
-}
+  /*background-color: rgb(var(--secondary-background-rgb)) !important;*/
+  background-color: red;
+  transition: background-image 0.5s ease;
+  background-image: url('https://olive-broad-giraffe-200.mypinata.cloud/ipfs/QmaETkVfYdYo8v1djEstHtA1GNzjsWZhYha5okYRMA8yxv');
+  }
 
 button.wallet-adapter-button-trigger:hover {
-  background-color: rgb(var(--hover-background-rgb)) !important;
+  transition: background-image 0.5s ease;
+  background-image: linear-gradient(rgba(99, 64, 0, 0.5), rgba(255, 255, 0, 0.5)), url('https://olive-broad-giraffe-200.mypinata.cloud/ipfs/QmaETkVfYdYo8v1djEstHtA1GNzjsWZhYha5okYRMA8yxv');
+}
+
+button.wallet-adapter-button:hover {
+  /*background-color: red;*/
+  /*background-color: rgb(var(--hover-background-rgb)) !important;*/
+  /*background-image: none;*/
+  /*opacity : 0.8;*/
+}
+
+
+nft-display{
+  margin: 50px 0px 0px 0px;
+  margin-top: 50px;
+}
+
+h2{
+  margin-bottom: '1em';
+  color: 'pink';
+  font-weight: 'bold';
+  text-transform: uppercase;
+  font-size: 150%
+}
+
+
+.wallet-adapter-button {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-family: 'DM Sans', 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  height: 48px;
+  line-height: 48px;
+  padding: 50px 24px 0px 24px;
+  border-radius: 4px;
 }
